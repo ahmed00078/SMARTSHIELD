@@ -3,7 +3,7 @@
 # SmartShield: AI-Driven Cybersecurity Incident Response Automation
 
 ## 🛡️ Overview
-SmartShield is an advanced AI-powered cybersecurity solution designed to automate incident detection, response, and mitigation. This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisia YP Affinity Group technical challenge 2024.
+This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisia YP Affinity Group technical challenge 2024.
 
 ## 🎯 Project Objectives
 - Develop an AI-powered infrastructure for automated cybersecurity incident management
