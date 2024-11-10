@@ -1,74 +1,123 @@
 # Data Processing Documentation
 
 ## Overview
-This document details the data preprocessing pipeline for the SmartShield project's cybersecurity datasets: CICIDS2017 and NSL-KDD.
+This document outlines the data preprocessing implementation for the SmartShield project's cybersecurity datasets: CICIDS2017 and NSL-KDD.
 
-## Datasets
+## Implementation Details
 
-### 1. CICIDS2017 Dataset
+### DataPreprocessor Class
+```python
+class DataPreprocessor:
+    def __init__(self):
+        self.label_encoders = {}
+        self.scalers = {}
+        self.metadata = {
+            'cicids': {},
+            'nsl_kdd': {}
+        }
+```
+
+### 1. CICIDS2017 Dataset Processing
+
 #### Raw Data Structure
 - Format: CSV files (Monday through Friday)
-- Size: ~50GB total
-- Features: Network flow data
-- Attack Types: Various cyber attacks including DoS, DDoS, Brute Force, XSS, SQL Injection, etc.
+- Files: monday.csv, tuesday.csv, wednesday.csv, thursday.csv, friday.csv
 
 #### Processing Steps
 1. **Data Cleaning**
-   ```python
-   # Column standardization
-   df.columns = df.columns.str.strip().str.replace(' ', '_')
-   
-   # Handle missing/infinite values
-   df = df.replace([np.inf, -np.inf], np.nan)
-   df = df.dropna()
-   ```
+```python
+# Clean column names
+df.columns = df.columns.str.strip().str.replace(' ', '_')
+
+# Handle infinite and missing values
+df = df.replace([np.inf, -np.inf], np.nan)
+df = df.dropna()
+```
 
 2. **Feature Processing**
-   - Numerical features: StandardScaler normalization
-   - Label encoding: Convert attack types to numerical values
-   - Feature selection: All features retained for comprehensive analysis
+- Label encoding for attack types
+- StandardScaler normalization for numerical features
+- Metadata collection (samples, features, label distribution)
 
-3. **Quality Checks**
-   - Verify no missing values
-   - Confirm feature scaling ranges (-1 to 1)
-   - Validate label distribution
-   - Check for data leakage
+### 2. NSL-KDD Dataset Processing
 
-### 2. NSL-KDD Dataset
 #### Raw Data Structure
-- Format: TXT files
-- Size: ~25MB
-- Features: 41 columns (network connection data)
-- Attack Categories: DoS, Probe, R2L, U2R
+- Format: TXT and ARFF files
+- Files: 
+  - KDDTrain+.txt
+  - KDDTest+.txt
+  - KDDTrain+_20Percent.txt
+  - KDDTest-21.txt
 
 #### Processing Steps
 1. **Data Loading**
-   - Support for both TXT and ARFF formats
-   - Consistent column naming
-   - Remove difficulty column
+- Support for both TXT and ARFF formats
+- Predefined column names
+- Removal of difficulty column if present
 
 2. **Feature Processing**
-   ```python
-   # Categorical features
-   categorical_cols = ['protocol_type', 'service', 'flag']
-   
-   # Numerical features
-   numeric_cols = [col for col in df.columns 
-                  if col not in categorical_cols + ['label']]
-   ```
+```python
+# Categorical features
+categorical_cols = ['protocol_type', 'service', 'flag']
 
-3. **Encoding**
-   - Categorical features: LabelEncoder
-   - Numerical features: StandardScaler
-   - Labels: Encoded to numerical values
+# Numerical features
+numeric_cols = [col for col in df.columns 
+               if col not in categorical_cols + ['label']]
 
-## Sample Dataset Creation
-### CICIDS2017 Sample
-- 1000 records per day
-- Stratified sampling to maintain attack distribution
-- All feature columns included
+# Encode categorical features
+for col in categorical_cols:
+    le = LabelEncoder()
+    df[col] = le.fit_transform(df[col].astype(str))
 
-### NSL-KDD Sample
-- 1000 records from each file
-- Maintain original attack distribution
-- All features included
+# Scale numerical features
+scaler = StandardScaler()
+df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
+```
+
+### Metadata Collection
+- Number of samples
+- Number of features
+- Label distribution
+- Feature types (for NSL-KDD)
+
+### Data Storage
+```python
+# Save processed data
+output_path = os.path.join(output_dir, dataset_type)
+os.makedirs(output_path, exist_ok=True)
+
+# Save as CSV
+df.to_csv(file_path, index=False)
+
+# Save metadata as JSON
+json.dump(self.metadata, f, indent=4)
+```
+
+## Usage
+
+```python
+# Initialize preprocessor
+preprocessor = DataPreprocessor()
+
+# Process CICIDS2017
+cicids_dfs = preprocessor.process_cicids_files(cicids_path)
+preprocessor.save_processed_data(cicids_dfs, processed_data_path, "cicids")
+
+# Process NSL-KDD
+nsl_kdd_dfs = preprocessor.process_nsl_kdd_files(nsl_kdd_path)
+preprocessor.save_processed_data(nsl_kdd_dfs, processed_data_path, "nsl_kdd")
+
+# Save metadata
+preprocessor.save_metadata(processed_data_path)
+```
+
+## File Structure
+```
+data/
+├── raw_data/
+│   ├── CICIDS2017_improved/
+│   └── NSL-KDD-Dataset-master/
+└── processed_data/
+    ├── cicids/
+    ├── nsl_kdd/
+```
