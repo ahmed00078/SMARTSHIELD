@@ -23,13 +23,11 @@ This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisi
 - Data Collection System
 - AI/ML Processing Pipeline
 - Microservices Infrastructure
-- Security Analytics Engine
 - User Interface/Dashboard
 - API Integration Layer
 
 ## 💻 Technologies Used
 - [List of main technologies, frameworks, and tools used]
-- [Add specific versions and dependencies]
 
 ## 🚀 Getting Started
 
@@ -41,16 +39,10 @@ This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisi
 ```bash
 # Clone the repository
 git clone https://github.com/[your-username]/smartshield.git
+```
 
 # Navigate to project directory
 cd smartshield
-
-# Install dependencies
-[Add installation commands]
-```
-
-### Configuration
-[Add configuration instructions]
 
 ## 📊 Project Structure
 ```
@@ -59,8 +51,8 @@ smartshield/
 ├── models/            # AI/ML models
 ├── api/               # API endpoints
 ├── ui/                # User interface
-├── docs/             # Documentation
-└── tests/            # Test suite
+├── docs/              # Documentation
+└── tests/             # Test suite
 ```
 
 ## 🔐 Security Features
@@ -68,30 +60,3 @@ smartshield/
 - Access control mechanisms
 - Compliance with GDPR, HIPAA, and industry standards
 - Secure data storage and transmission
-
-## 📝 Documentation
-- [Link to detailed documentation]
-- [API documentation]
-- [Deployment guide]
-
-## 🤝 Contributing
-We welcome contributions to SmartShield! Please read our contributing guidelines before submitting pull requests.
-
-## ✨ Team Members
-- [Team member 1]
-- [Team member 2]
-- [Add other team members]
-
-## 📄 License
-[Add license information]
-
-## 🙏 Acknowledgments
-- IEEE CS Tunisia Section Chapter
-- IEEE Tunisia YP Affinity Group
-- [Other acknowledgments]
-
-## 📞 Contact
-For any inquiries, please contact us at cs.tn@ieee.org
-
-## 🏆 Project Status
-[Add current project status, awards, or recognition]
