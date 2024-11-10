@@ -13,7 +13,6 @@ class DataPreprocessor:
         self.label_encoders = {}
         self.scalers = {}
         self.metadata = {
-            'cicids': {},
             'nsl_kdd': {}
         }
 
@@ -23,60 +22,6 @@ class DataPreprocessor:
             format='%(asctime)s - %(levelname)s - %(message)s'
         )
         return logging.getLogger(__name__)
-
-    def process_cicids_files(self, input_dir: str) -> Dict[str, pd.DataFrame]:
-        """Process all CICIDS2017 CSV files (Monday to Friday)"""
-        processed_dfs = {}
-        expected_files = ['monday.csv', 'tuesday.csv', 'wednesday.csv', 'thursday.csv', 'friday.csv']
-        
-        for filename in expected_files:
-            file_path = os.path.join(input_dir, filename)
-            if not os.path.exists(file_path):
-                self.logger.warning(f"File not found: {filename}")
-                continue
-                
-            self.logger.info(f"Processing {filename}")
-            
-            # Read the CSV file
-            df = pd.read_csv(file_path, low_memory=False)
-            
-            # Clean column names (remove spaces and standardize)
-            df.columns = df.columns.str.strip().str.replace(' ', '_')
-            
-            # Handle infinite and missing values
-            df = df.replace([np.inf, -np.inf], np.nan)
-            df = df.dropna()
-            
-            # Ensure 'Label' column exists and is properly formatted
-            label_col = 'Label' if 'Label' in df.columns else 'label'
-            if label_col not in df.columns:
-                self.logger.error(f"No label column found in {filename}")
-                continue
-                
-            # Store unique labels and their counts
-            label_counts = df[label_col].value_counts().to_dict()
-            self.metadata['cicids'][filename] = {
-                'n_samples': len(df),
-                'n_features': len(df.columns) - 1,
-                'label_distribution': label_counts
-            }
-            
-            # Encode labels
-            le = LabelEncoder()
-            df[label_col] = le.fit_transform(df[label_col].astype(str))
-            self.label_encoders[f'cicids_{filename}'] = le
-            
-            # Scale numerical features
-            numeric_cols = df.select_dtypes(include=[np.number]).columns.tolist()
-            numeric_cols.remove(label_col)  # Remove label column from scaling
-            
-            scaler = StandardScaler()
-            df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
-            self.scalers[f'cicids_{filename}'] = scaler
-            
-            processed_dfs[filename] = df
-            
-        return processed_dfs
 
     def process_nsl_kdd_files(self, input_dir: str) -> Dict[str, pd.DataFrame]:
         """Process all NSL-KDD dataset files"""
@@ -185,12 +130,6 @@ def main():
     base_path = "../../data"
     raw_data_path = os.path.join(base_path, "raw_data")
     processed_data_path = os.path.join(base_path, "processed_data")
-    
-    # Process CICIDS2017 dataset
-    cicids_path = os.path.join(raw_data_path, "CICIDS2017_improved")
-    if os.path.exists(cicids_path):
-        cicids_dfs = preprocessor.process_cicids_files(cicids_path)
-        preprocessor.save_processed_data(cicids_dfs, processed_data_path, "cicids")
     
     # Process NSL-KDD dataset
     nsl_kdd_path = os.path.join(raw_data_path, "NSL-KDD-Dataset-master")
