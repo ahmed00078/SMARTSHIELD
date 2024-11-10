@@ -2,59 +2,6 @@
 
 This document details the cybersecurity datasets used in the SmartShield project for training and testing AI models.
 
-## CICIDS2017 Dataset
-
-### Overview
-- **Source:** [Canadian Institute for Cybersecurity IDS 2017 Dataset](https://intrusion-detection.distrinet-research.be/WTMC2021/extended_doc.html)
-- **Size:** ~1.07GB
-- **Format:** 5 CSV files (Monday through Friday)
-- **Description:** A comprehensive network traffic dataset containing both normal and attack traffic patterns
-
-### Features (84 total)
-#### Network Flow Basics
-- Flow ID
-- Source IP/Port
-- Destination IP/Port
-- Protocol
-- Timestamp
-
-#### Flow Statistics
-- Flow Duration
-- Flow Packets/s
-- Flow IAT (Mean, Std, Max, Min)
-- Total Forward/Backward Packets
-- Packet Lengths (Max, Min, Mean, Std)
-- Packet Length Statistics (Mean, Std, Variance)
-
-#### Protocol Flags
-- FIN, SYN, RST, PSH
-- ACK, URG, CWE, ECE
-
-#### Advanced Metrics
-- Down/Up Ratio
-- Average Packet Size
-- Average Forward/Backward Segment Size
-- Subflow Forward/Backward Packets and Bytes
-- Initial Window Bytes (forward and backward)
-- Active/Idle Statistics (Mean, Std, Max, Min)
-
-### Attack Categories
-1. **Network Attacks**
-   - Brute Force
-   - Denial of Service (DoS)
-   - Distributed DoS (DDoS)
-   - PortScan
-
-2. **Application Attacks**
-   - Web Attacks
-     - SQL Injection
-     - Cross-Site Scripting (XSS)
-   - Heartbleed
-
-3. **System Attacks**
-   - Infiltration
-   - Botnet
-
 ## NSL-KDD Dataset
 
 ### Overview
@@ -125,6 +72,5 @@ This document details the cybersecurity datasets used in the SmartShield project
 
 ### Sample Data
 - Quick-start datasets available in `processed_data/samples/`
-  - CICIDS samples: `processed_data/samples/cicids/`
   - NSL-KDD samples: `processed_data/samples/nsl_kdd/`
 - Suitable for initial testing and development

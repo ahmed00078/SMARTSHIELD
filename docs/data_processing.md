@@ -1,7 +1,7 @@
 # Data Processing Documentation
 
 ## Overview
-This document outlines the data preprocessing implementation for the SmartShield project's cybersecurity datasets: CICIDS2017 and NSL-KDD.
+This document outlines the data preprocessing implementation for the SmartShield project's cybersecurity dataset: NSL-KDD.
 
 ## Implementation Details
 
@@ -17,29 +17,7 @@ class DataPreprocessor:
         }
 ```
 
-### 1. CICIDS2017 Dataset Processing
-
-#### Raw Data Structure
-- Format: CSV files (Monday through Friday)
-- Files: monday.csv, tuesday.csv, wednesday.csv, thursday.csv, friday.csv
-
-#### Processing Steps
-1. **Data Cleaning**
-```python
-# Clean column names
-df.columns = df.columns.str.strip().str.replace(' ', '_')
-
-# Handle infinite and missing values
-df = df.replace([np.inf, -np.inf], np.nan)
-df = df.dropna()
-```
-
-2. **Feature Processing**
-- Label encoding for attack types
-- StandardScaler normalization for numerical features
-- Metadata collection (samples, features, label distribution)
-
-### 2. NSL-KDD Dataset Processing
+### NSL-KDD Dataset Processing
 
 #### Raw Data Structure
 - Format: TXT and ARFF files
@@ -99,10 +77,6 @@ json.dump(self.metadata, f, indent=4)
 # Initialize preprocessor
 preprocessor = DataPreprocessor()
 
-# Process CICIDS2017
-cicids_dfs = preprocessor.process_cicids_files(cicids_path)
-preprocessor.save_processed_data(cicids_dfs, processed_data_path, "cicids")
-
 # Process NSL-KDD
 nsl_kdd_dfs = preprocessor.process_nsl_kdd_files(nsl_kdd_path)
 preprocessor.save_processed_data(nsl_kdd_dfs, processed_data_path, "nsl_kdd")
@@ -115,9 +89,7 @@ preprocessor.save_metadata(processed_data_path)
 ```
 data/
 ├── raw_data/
-│   ├── CICIDS2017_improved/
 │   └── NSL-KDD-Dataset-master/
 └── processed_data/
-    ├── cicids/
     ├── nsl_kdd/
 ```
