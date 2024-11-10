@@ -47,12 +47,17 @@ cd smartshield
 ## 📊 Project Structure
 ```
 smartshield/
-├── data/              # Data processing and storage
-├── models/            # AI/ML models
-├── api/               # API endpoints
-├── ui/                # User interface
-├── docs/              # Documentation
-└── tests/             # Test suite
+├───api                     # API endpoints
+├───data                    # Data processing and storage
+│   └───processed_data
+│       └───samples
+│           ├───cicids
+│           └───nsl_kdd
+├───docs                    # Documentation
+├───models                  # AI/ML models
+├───src
+├───tests                   # Test suite
+└───ui                      # User interface
 ```
 
 ## 🔐 Security Features
