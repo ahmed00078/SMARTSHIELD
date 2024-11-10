@@ -22,12 +22,11 @@ This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisi
 ## 🏗️ Technical Architecture
 - Data Collection System
 - AI/ML Processing Pipeline
-- Microservices Infrastructure
 - User Interface/Dashboard
 - API Integration Layer
 
 ## 💻 Technologies Used
-- [List of main technologies, frameworks, and tools used]
+- python numpy pandas tensorflow scikit-learn tqdm streamlit
 
 ## 🚀 Getting Started
 
@@ -38,7 +37,7 @@ This project was developed for the IEEE CS Tunisia Section Chapter & IEEE Tunisi
 ### Installation
 ```bash
 # Clone the repository
-git clone https://github.com/[your-username]/smartshield.git
+git clone https://github.com/ahmed00078/SMARTSHIELD.git
 ```
 
 # Navigate to project directory
