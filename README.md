@@ -58,18 +58,14 @@ python src/main.py
 ## 📊 Project Structure
 ```
 SMARTSHIELD/
-├───api                     # API endpoints and integration
 ├───data                    # Data storage and processing
 │   └───processed_data      # Cleaned and preprocessed datasets
 │       └───samples         # Sample datasets for testing
-│           ├───cicids      # CICIDS2017 dataset samples
 │           └───nsl_kdd     # NSL-KDD dataset samples
 ├───docs                    # Project documentation
 ├───models                  # AI/ML models
 │   ├───decision_model      # Decision-making models
 │   └───RL                 # Reinforcement learning models
-├───src                     # Source code
-├───tests                   # Test suite
 └───ui                      # User interface components
 ```
 
