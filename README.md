@@ -50,9 +50,6 @@ cd SMARTSHIELD
 
 # Install required packages
 pip install -r requirements.txt
-
-# Start the application
-python src/main.py
 ```
 
 ## 📊 Project Structure
